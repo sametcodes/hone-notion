@@ -40,7 +40,7 @@ export const Flow = ({ refs, setRefs, handleModal }: IFlow) => {
         if (ref.type !== "div") {
             setRefs(refs.map(ref => {
                 if (ref === refs[id]) {
-                    return { ...ref, type: "div" }
+                    return { ...ref, type: "div", value: "" }
                 }
                 return ref;
             }));
