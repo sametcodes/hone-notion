@@ -31,6 +31,13 @@ Displays contenteditable div elements by rendering a Textarea, which is a styled
 
 Handles `onKeyDown` and `onKeyUp` events to trigger creating new input in case of user presses on `enter` key, or deleting the current input in case of user presses `backspace` key.
 
+## Ideas
+
+- There is no icon support on the current version, having an icon set and using them would help to improve UI
+- More element support such as image, links, and callouts would make the editor more useful
+- Navigating with arrow keys on the elements of modal would make easier to change the element type of the current input
+- Pasting images and texts properly
+
 ## Known Bugs
 
 - The editor doesn't work properly if user pastes some copied HTML texts from another page. The content comes with additional wrapped `span` or `p` tags. This can be solved by listening `paste` event in the *useEffect* function of `Input` component.
