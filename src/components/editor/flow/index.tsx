@@ -7,10 +7,12 @@ interface IFlow {
     refs: {
         link: React.RefObject<HTMLDivElement>;
         type: string;
+        value: string;
     }[];
     setRefs: React.Dispatch<React.SetStateAction<{
         link: React.RefObject<HTMLDivElement>;
         type: string;
+        value: string;
     }[]>>;
     handleModal: (options: {
         show: boolean, position: { x: number, y: number }, text: string, ref: React.RefObject<HTMLDivElement>
@@ -23,7 +25,7 @@ export const Flow = ({ refs, setRefs, handleModal }: IFlow) => {
     const createNewInput = (id: number) => {
         // Create a new input
         if (refs.length - 1 === id) {
-            setRefs((refs) => [...refs, { link: createRef<HTMLDivElement>(), type: "div" }]);
+            setRefs((refs) => [...refs, { link: createRef<HTMLDivElement>(), type: "div", value: "" }]);
         }
 
         if (refs.length - 1 > id) {
@@ -92,6 +94,7 @@ export const Flow = ({ refs, setRefs, handleModal }: IFlow) => {
                     <Input
                         ref={ref.link}
                         type={ref.type}
+                        value={ref.value}
                         createNewInput={createNewInput.bind(this, id)}
                         deleteInput={deleteInput.bind(this, id)}
                         sendCommand={sendCommand}

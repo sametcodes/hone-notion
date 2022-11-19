@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Document = styled.div`
     font-family: 'Roboto', sans-serif;
+    color: #333;
 `;
 
 
@@ -17,7 +18,6 @@ export const Navbar = styled.nav`
 export const Logo = styled.div`
     font-size: 1.5em;
 `;
-
 
 export const Menu = styled.div`
     display: flex;

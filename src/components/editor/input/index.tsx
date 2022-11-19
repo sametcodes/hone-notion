@@ -5,12 +5,12 @@ interface IInput {
     createNewInput: () => void;
     deleteInput: () => void;
     sendCommand: (ref: React.ForwardedRef<HTMLDivElement>, text: string) => void;
+    value: string;
     type: string;
 }
 
 export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivElement>) => {
-    const { createNewInput, deleteInput, sendCommand, type } = props;
-
+    const { createNewInput, deleteInput, sendCommand, type, value } = props;
     // TODO: set the cursor to the end when focused
     useEffect(() => {
         const target = (ref as RefObject<HTMLDivElement>);
@@ -46,7 +46,8 @@ export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivE
             placeholder="Type / to search"
             spellCheck={false}
             onKeyDown={onKeyDown}
-            onKeyUp={onKeyUp}
-        />
+            onKeyUp={onKeyUp}>
+            {value}
+        </Textarea>
     </>
 })

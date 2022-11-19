@@ -9,9 +9,13 @@ interface IEditor {
 }
 
 export const Editor = ({ config }: IEditor) => {
-    const [refs, setRefs] = useState<{ link: React.RefObject<HTMLDivElement>; type: string; }[]>(
-        new Array(1).fill(0).map(() => ({ link: createRef<HTMLDivElement>(), type: "div" }))
-    );
+    const initialRefs = [
+        { link: createRef<HTMLDivElement>(), type: "h1", value: "Frontend Developer, Test Project" },
+        { link: createRef<HTMLDivElement>(), type: "div", value: "Your goal is to make a page that looks like exactly like this one, and has ability to create H1 text simply by typing / then 1, then typing text, and hitting enter." },
+        { link: createRef<HTMLDivElement>(), type: "h1", value: "This is my header" },
+        { link: createRef<HTMLDivElement>(), type: "div", value: "Now this is normal text. All I had to do is do / + 1, and then type my text and hit ENTER/RETURN" },
+    ]
+    const [refs, setRefs] = useState<{ link: React.RefObject<HTMLDivElement>; type: string; value: string; }[]>(initialRefs);
 
     const [modal, setModal] = useState<{
         show: boolean;
