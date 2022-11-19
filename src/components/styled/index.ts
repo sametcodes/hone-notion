@@ -30,11 +30,24 @@ export const MenuItem = styled.div`
 `;
 
 export const Container = styled.div`
-    padding: 0 300px;
 `;
 
 export const Main = styled.main`
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    justify-content: center;
+    align-content: center;
+    margin: 0px auto;
+    width: 50%;
+
+    @media only screen and (max-width: 768px) {
+        width: 70%;
+    }
+    @media only screen and (max-width: 320px) {
+        width: 95%;
+    }
 `;
 
 export const Textarea = styled.div`
@@ -124,9 +137,17 @@ export const DocumentFlex = styled.div`
     align-items: center;
 `
 
-export const DocumentElement = styled.div`
+interface IDocumentElement {
+    hideMobile?: boolean;
+}
+
+export const DocumentElement = styled.div<IDocumentElement>`
     position: relative;
     margin-right: 15px;
+
+    @media only screen and (max-width: 720px) {
+        display: ${props => props.hideMobile ? 'none !important' : 'block'};
+    }
 `
 
 export const DocumentStatus = styled(DocumentElement)`
@@ -144,9 +165,24 @@ export const DocumentOwnerAvatar = styled.img`
     border-radius: 50%;
 `;
 
-export const DocumentBarText = styled(DocumentElement)`
+interface IDocumentBarText {
+    hideMobile: boolean;
+}
+
+export const DocumentBarText = styled(DocumentElement) <IDocumentBarText>`
     font-size: 1em;
     color: #aaa;
+    display: block;
+
+    &.seperator{
+        @media only screen and (max-width: 720px) {
+            display: ${props => props.hideMobile ? 'none !important' : 'block'};
+        }
+    }
+
+    &:not([style*="display: none"]):last-child{
+        display: none;
+    }
 `;
 
 export const DocumentAction = styled(DocumentElement)`
@@ -165,3 +201,8 @@ export const DocumentActionButton = styled.button`
     }
 `;
 
+export const DocumentSeperator = styled.span`
+    color: #ccc;
+    font-size: 1.2em;
+    padding-right: 15px;
+`

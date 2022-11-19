@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
 import { Container, EditorTitle } from "../../styled"
 import {
@@ -16,8 +16,9 @@ export const DocumentFlexWithSeperators = ({ children }: IDocumentFlexWithSepera
     return <DocumentFlex>
         {React.Children.map(children, (child, index) => {
             return <>
-                {index !== 0 && <DocumentBarText> | </DocumentBarText>}
                 {child}
+                <DocumentBarText hideMobile={(child as ReactElement).props.hideMobile} 
+                    className="seperator"> | </DocumentBarText>
             </>
         })}
     </DocumentFlex>
@@ -35,11 +36,11 @@ export const Header = ({ title }: IHeader) => {
             <DocumentBar>
                 <DocumentFlexWithSeperators>
                     <DocumentStatus>P</DocumentStatus>
-                    <DocumentBarText>0 min</DocumentBarText>
+                    <DocumentBarText hideMobile>0 min</DocumentBarText>
                     <DocumentOwnerAvatar
                         src="https://pbs.twimg.com/profile_images/1576978682689765376/hcMUbibY_400x400.jpg"
                     />
-                    <DocumentBarText>← 0</DocumentBarText>
+                    <DocumentBarText hideMobile>← 0</DocumentBarText>
                 </DocumentFlexWithSeperators>
 
                 <DocumentFlex>
