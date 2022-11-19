@@ -1,6 +1,7 @@
 import { useState, createRef } from 'react';
 import { FlowModal } from './modal';
 import { Flow } from './flow';
+import { Header } from './header';
 
 interface IEditor {
     config: {
@@ -10,7 +11,6 @@ interface IEditor {
 
 export const Editor = ({ config }: IEditor) => {
     const initialRefs = [
-        { link: createRef<HTMLDivElement>(), type: "h1", value: "Frontend Developer, Test Project" },
         { link: createRef<HTMLDivElement>(), type: "div", value: "Your goal is to make a page that looks like exactly like this one, and has ability to create H1 text simply by typing / then 1, then typing text, and hitting enter." },
         { link: createRef<HTMLDivElement>(), type: "h1", value: "This is my header" },
         { link: createRef<HTMLDivElement>(), type: "div", value: "Now this is normal text. All I had to do is do / + 1, and then type my text and hit ENTER/RETURN" },
@@ -44,6 +44,7 @@ export const Editor = ({ config }: IEditor) => {
     }
 
     return <>
+        <Header title={"Frontend Development"} />
         <Flow refs={refs} setRefs={setRefs} handleModal={handleModal} />
         {modal.show && <FlowModal nodes={config.nodes} modal={modal} onSelect={onSelectModalNodeType} />}
     </>

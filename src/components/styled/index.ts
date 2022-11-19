@@ -12,7 +12,7 @@ export const Navbar = styled.nav`
     align-items: center;
     height: 60px;
     color: #222;
-    padding: 0 305px;
+    padding: 0 30px;
 `;
 
 export const Logo = styled.div`
@@ -40,14 +40,13 @@ export const Main = styled.main`
 export const Textarea = styled.div`
     width: 100%;
     border: 0px;
-    padding: 5px;
-    margin: 5px 0px;
     resize: none;
     outline: none;
     ::placeholder,
     ::-webkit-input-placeholder { color: transparent; }
     :-ms-input-placeholder { color: transparent; }
     position: relative;
+    line-height: 1.5;
 
     &:focus {
         ::placeholder,
@@ -68,7 +67,7 @@ export const Textarea = styled.div`
     }
 `;
 
-interface IModal{
+interface IModal {
     position: { x: number; y: number; }
 }
 
@@ -98,3 +97,69 @@ export const ListItem = styled.li`
         background-color: #ccc;
     }
 `;
+
+export const EditorTitle = styled(Container)`
+    font-size: 3em;
+    h1{
+        font-size: 1em;
+        padding: 0px 0px 20px 0px;
+        border-bottom: 2px solid #eee;
+    }
+`;
+
+export const DocumentBar = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    color: #999;
+`;
+
+export const DocumentFlex = styled.div`
+    display: flex;
+    align-items: center;
+`
+
+export const DocumentElement = styled.div`
+    position: relative;
+    margin-right: 15px;
+`
+
+export const DocumentStatus = styled(DocumentElement)`
+    background-color: #d9f9e6;
+    color: #357559;
+    padding: 5px 8px;
+    border-radius: 5px;
+`
+
+export const DocumentOwnerAvatar = styled.img`
+    width: 25px;
+    height: 25px;
+    position: relative;
+    margin-right: 15px;
+    border-radius: 50%;
+`;
+
+export const DocumentBarText = styled(DocumentElement)`
+    font-size: 1em;
+    color: #aaa;
+`;
+
+export const DocumentAction = styled(DocumentElement)`
+    display: flex;
+`
+
+export const DocumentActionButton = styled.button`
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+    padding: 10px;
+    color: #999;
+    border-radius: 5px;
+    &:hover {
+        background-color: #eee;
+    }
+`;
+
