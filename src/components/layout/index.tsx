@@ -10,9 +10,9 @@ export const Layout = ({ children }: ILayout) => {
             <Logo>h-one</Logo>
 
             <Menu>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuItem>Link 3</MenuItem>
+                <MenuItem>a</MenuItem>
+                <MenuItem>b</MenuItem>
+                <MenuItem>c</MenuItem>
             </Menu>
         </Navbar>
 
