@@ -12,10 +12,40 @@ interface IInput {
 export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivElement>) => {
     const { createNewInput, deleteInput, sendCommand, type, value } = props;
     // TODO: set the cursor to the end when focused
+
+    const target = (ref as RefObject<HTMLDivElement>);
     useEffect(() => {
-        const target = (ref as RefObject<HTMLDivElement>);
+        if (!target.current) return;
         target.current?.focus();
+
     }, [type]);
+
+    useEffect(() => {
+        if (!target.current) return;
+
+        const movesTheCursorToEnd = () => {
+            if (!target.current) return;
+
+            let range = document.createRange();
+            let selection = window.getSelection();
+            if (!selection) return;
+
+            range.selectNodeContents(target.current);
+            range.setStart(target.current.firstChild as Node, target.current.innerText.length);
+            range.setEnd(target.current.firstChild as Node, target.current.innerText.length);
+
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
+
+        target.current?.addEventListener("focus", movesTheCursorToEnd, false);
+
+        // clear up the event listener when the component unmounts
+        return () => {
+            target.current?.removeEventListener("focus", movesTheCursorToEnd, false);
+        }
+    }, [])
+
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
         // create new input if enter is pressed

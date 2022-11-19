@@ -47,6 +47,7 @@ export const Textarea = styled.div`
     :-ms-input-placeholder { color: transparent; }
     position: relative;
     line-height: 1.5;
+    margin: 10px 0px;
 
     &:focus {
         ::placeholder,

@@ -7,7 +7,6 @@ interface ILayout {
 export const Layout = ({ children }: ILayout) => {
     return <Document>
         <Navbar>
-            {/* TODO: wrap here into container */}
             <Logo>h-one</Logo>
 
             <Menu>
