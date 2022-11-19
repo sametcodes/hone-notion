@@ -1,4 +1,4 @@
-import { useState, createRef } from 'react';
+import { useState, createRef, useMemo } from 'react';
 import { FlowModal } from './modal';
 import { Flow } from './flow';
 import { Header } from './header';
@@ -10,11 +10,12 @@ interface IEditor {
 }
 
 export const Editor = ({ config }: IEditor) => {
-    const initialRefs = [
+    const initialRefs = useMemo(() => [
         { link: createRef<HTMLDivElement>(), type: "div", value: "Your goal is to make a page that looks like exactly like this one, and has ability to create H1 text simply by typing / then 1, then typing text, and hitting enter." },
         { link: createRef<HTMLDivElement>(), type: "h1", value: "This is my header" },
         { link: createRef<HTMLDivElement>(), type: "div", value: "Now this is normal text. All I had to do is do / + 1, and then type my text and hit ENTER/RETURN" },
-    ]
+    ], []);
+
     const [refs, setRefs] = useState<{ link: React.RefObject<HTMLDivElement>; type: string; value: string; }[]>(initialRefs);
 
     const [modal, setModal] = useState<{
@@ -36,7 +37,7 @@ export const Editor = ({ config }: IEditor) => {
     const onSelectModalNodeType = (item: { node: string; description: string; }) => {
         setRefs(refs.map(ref => {
             if (ref.link === modal.ref) {
-                return { ...ref, type: item.node }
+                return { ...ref, type: item.node, value: "" }
             }
             return ref;
         }));

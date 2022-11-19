@@ -78,6 +78,7 @@ export const Modal = styled.div<IModal>`
     border: 1px solid #ccc;
     border-radius: 5px;
     display: block;
+    background-color: #fff;
 
     top: ${props => props.position.y + 40}px;
     left: ${props => props.position.x}px;
