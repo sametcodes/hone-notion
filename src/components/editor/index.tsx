@@ -1,112 +1,46 @@
-import { useRef, useState, createRef, forwardRef, useEffect, RefObject, ReactEventHandler } from 'react';
-import { createTextChangeRange } from 'typescript';
-import { Textarea, Container } from '../styled'
+import { useState, createRef } from 'react';
+import { FlowModal } from './modal';
+import { Flow } from './flow';
 
-export const Editor = () => {
+interface IEditor {
+    config: {
+        nodes: { node: string; description: string }[];
+    }
+}
+
+export const Editor = ({ config }: IEditor) => {
     const [refs, setRefs] = useState<{ link: React.RefObject<HTMLDivElement>; type: string; }[]>(
         new Array(1).fill(0).map(() => ({ link: createRef<HTMLDivElement>(), type: "div" }))
     );
 
-    return <>
-        <Flow refs={refs} setRefs={setRefs} />
-    </>
-}
+    const [modal, setModal] = useState<{
+        show: boolean;
+        position: { x: number; y: number; };
+        text: string;
+        ref: React.RefObject<HTMLDivElement> | null;
+    }>({ show: false, position: { x: 0, y: 0 }, text: "", ref: null });
 
-interface IFlow{
-    children?: React.ReactNode;
-    refs: {
-        link: React.RefObject<HTMLDivElement>;
-        type: string;
-    }[];
-    setRefs: React.Dispatch<React.SetStateAction<{
-        link: React.RefObject<HTMLDivElement>;
-        type: string;
-    }[]>>;
-}
-
-export const Flow = ({ refs, setRefs }: IFlow) => {
-
-    const inputsContainerRef = useRef<HTMLDivElement>(null);
-
-    const createNewInput = (id: number) => {
-        if (refs.length - 1 === id) setRefs((refs) => [...refs, { link: createRef<HTMLDivElement>(), type: "div" }]);
-        if (refs.length - 1 > id) refs[id + 1].link.current?.focus();
+    const handleModal = (options: {
+        show: boolean;
+        position: { x: number; y: number };
+        text: string;
+        ref: React.RefObject<HTMLDivElement>;
+    }) => {
+        setModal(options);
     }
 
-    const deleteInput = (id: number) => {
-        if (refs.length <= 1) return;
-
-        setRefs(refs => refs.filter((_, i) => i !== id));
-        refs[id - 1].link.current?.focus();
-    }
-
-    const onClickInputContainer = (event: React.MouseEvent<HTMLDivElement>, id: number) => {
-        event.preventDefault();
-        refs[id].link.current?.focus();
-    }
-
-    const onClickEditor = (event: React.MouseEvent<HTMLDivElement>) => {
-        // focus on the last input if clicked outside of the inputs
-        if (!inputsContainerRef?.current?.contains(event.target as HTMLDivElement)) {
-            refs[refs.length - 1].link.current?.focus();
-        }
-
-        setRefs(refs => refs.map(ref => ({ ...ref, type: "h1" })));
-    }
-
-    return <div onClick={onClickEditor} style={{ paddingBottom: "500px" }}>
-        <div ref={inputsContainerRef}>
-            {refs.map((ref, id) =>
-                <Container key={id} onClick={(event) => onClickInputContainer(event, id)}>
-                    <Input
-                        ref={ref.link}
-                        type={ref.type}
-                        createNewInput={createNewInput.bind(this, id)}
-                        deleteInput={deleteInput.bind(this, id)}
-                    />
-                </Container>
-            )}
-        </div>
-    </div>
-}
-
-interface IInput {
-    createNewInput: () => void;
-    deleteInput: () => void;
-    type: string;
-}
-
-export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivElement>) => {
-    const { createNewInput, deleteInput, type } = props;
-
-    // TODO: set the cursor to the end when focused
-    useEffect(() => {
-        (ref as RefObject<HTMLDivElement>).current?.focus();
-    }, [])
-
-    const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-        // create new input if enter is pressed
-        if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault();
-            createNewInput();
-        }
-
-        // delete input if backspace is pressed
-        if (event.key === "Backspace" && (event.target as HTMLDivElement).innerHTML === "") {
-            event.preventDefault();
-            deleteInput();
-            return;
-        }
+    const onSelectModalNodeType = (item: { node: string; description: string; }) => {
+        setRefs(refs.map(ref => {
+            if (ref.link === modal.ref) {
+                return { ...ref, type: item.node }
+            }
+            return ref;
+        }));
+        setModal({ ...modal, show: false });
     }
 
     return <>
-        <Textarea
-            ref={ref}
-            as={type as any}
-            contentEditable={true}
-            suppressContentEditableWarning={true}
-            placeholder="Type here..."
-            spellCheck={false}
-            onKeyDown={onKeyDown} />
+        <Flow refs={refs} setRefs={setRefs} handleModal={handleModal} />
+        {modal.show && <FlowModal nodes={config.nodes} modal={modal} onSelect={onSelectModalNodeType} />}
     </>
-})
+}
