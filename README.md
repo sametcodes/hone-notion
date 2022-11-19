@@ -36,7 +36,8 @@ Handles `onKeyDown` and `onKeyUp` events to trigger creating new input in case o
 - There is no icon support on the current version, having an icon set and using them would help to improve UI
 - More element support such as image, links, and callouts would make the editor more useful
 - Navigating with arrow keys on the elements of modal would make easier to change the element type of the current input
-- Pasting images and texts properly
+- Rendering images, callout boxes, quotes, alerts as elements
+- Providing a better development environment for developers to manipulate the default render functions of elements, such as image and links
 
 ## Known Bugs
 
