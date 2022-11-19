@@ -11,8 +11,6 @@ interface IDocumentFlexWithSeperators {
 }
 
 export const DocumentFlexWithSeperators = ({ children }: IDocumentFlexWithSeperators) => {
-    console.log(children);
-
     return <DocumentFlex>
         {React.Children.map(children, (child, index) => {
             return <>
