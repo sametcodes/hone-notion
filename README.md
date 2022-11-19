@@ -1,6 +1,8 @@
 # h-one ― notion-like editor
 
-This repository was prepared for a task. I'll think on keep developing and maintaining.
+> This repository was prepared for a task. I'll think on keep developing and maintaining.
+
+The purpose of the editor is having a notion-like flow and functionality. It uses [`contenteditable`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/contenteditable) parameter on elements to display texts as wanted. 
 
 ## Components
 
@@ -26,7 +28,7 @@ Returns an absoluted div element.
 
 ### Input
 
-Displays contenteditable div elements by rendering a Textarea, which is a styled component. It uses [`as` polymorphic prop](https://styled-components.com/docs/api#as-polymorphic-prop) to render the content in different type of elements, such as h1, h2, etc.
+Displays contenteditable div elements by rendering a Textarea, which is a styled component. It uses [`as` polymorphic prop](https://styled-components.com/docs/api#as-polymorphic-prop) to render the content in different type of elements, such as h1, h2, etc. The input inside is uncontrolled, and the component re-renders only if the value of the reference object has changed.
 
 Handles `onKeyDown` and `onKeyUp` events to trigger creating new input in case of user presses on `enter` key, or deleting the current input in case of user presses `backspace` key.
 
