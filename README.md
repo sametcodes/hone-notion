@@ -1,46 +1,36 @@
-# Getting Started with Create React App
+# h-one ― notion-like editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository was prepared for a task on Upwork.
 
-## Available Scripts
+## Components
 
-In the project directory, you can run:
+- Editor
 
-### `npm start`
+Holds the input refs and modal status in a state.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Returns Flow and Modal.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Flow
 
-### `npm test`
+Renders multiple inputs, create new ones or delete according to user's actions. Also it handles focusing on inputs properly if user clicks out of input or input container.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This component interacts with `Modal` components` to change the type of current focused div.
 
-### `npm run build`
+Returns an array of `Input` component.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Modal
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Renders the given nodes in the configuration props of `Editor` components and filter them out according to the value of user's focused input.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Returns an absoluted div element.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- Input
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Displays contenteditable div elements by rendering a Textarea, which is a styled component. It uses [`as` polymorphic prop](https://styled-components.com/docs/api#as-polymorphic-prop) to render the content in different type of elements, such as h1, h2, etc.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Handles `onKeyDown` and `onKeyUp` events to trigger creating new input in case of user presses on `enter` key, or deleting the current input in case of user presses `backspace` key.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Known Bugs
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- The editor doesn't work properly if user pastes some copied HTML texts from another page. The content comes with additional wrapped `span` or `p` tags. This can be solved by listening `paste` event in the *useEffect* function of `Input` component.

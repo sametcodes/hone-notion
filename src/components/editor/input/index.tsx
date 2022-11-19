@@ -15,11 +15,6 @@ export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivE
     useEffect(() => {
         const target = (ref as RefObject<HTMLDivElement>);
         target.current?.focus();
-
-        // target.current?.addEventListener("paste", (event) => {
-        //     event.preventDefault();
-        //     let paste = event?.clipboardData?.getData('text');
-        // })
     }, [type]);
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
