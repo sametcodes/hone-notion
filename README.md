@@ -46,3 +46,4 @@ Handles `onKeyDown` and `onKeyUp` events to trigger creating new input in case o
 ## Known Bugs
 
 - The editor doesn't work properly if user pastes some copied HTML texts from another page. The content comes with additional wrapped `span` or `p` tags. This can be solved by listening `paste` event in the *useEffect* function of `Input` component.
+- If user removes the current line, the cursor jumps to the previous line, but to the beginning of the previous line. It should jump to the end of the line.
