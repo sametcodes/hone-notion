@@ -1,4 +1,5 @@
-import { List, ListItem, Modal } from '../../styled';
+import { Node } from '../../../config';
+import { Modal, ModalList, ModalListItem, ModalListItemName } from '../../styled';
 
 interface IFlowModal {
     modal: {
@@ -9,8 +10,8 @@ interface IFlowModal {
         };
         text: string;
     },
-    nodes: { node: string; description: string }[];
-    onSelect: (item: { node: string; description: string }) => void;
+    nodes: Node[];
+    onSelect: (item: Node) => void;
 }
 
 export const FlowModal = (props: IFlowModal) => {
@@ -19,10 +20,14 @@ export const FlowModal = (props: IFlowModal) => {
     const filtered_nodes = nodes
         .filter(node => node.node.startsWith(modal.text))
         .map((node, index) =>
-            <ListItem onClick={() => onSelect(node)} key={index}>{node.node} ― {node.description}</ListItem>)
+            <ModalListItem onClick={() => onSelect(node)} key={index}>
+                <ModalListItemName>{node.node} ― {node.description}</ModalListItemName>
+            </ModalListItem>)
+
+
     return <Modal position={modal.position}>
-        <List>
-            {filtered_nodes.length > 0 ? filtered_nodes : <ListItem>No results</ListItem>}
-        </List>
+        <ModalList>
+            {filtered_nodes.length > 0 ? filtered_nodes : <ModalListItem>No results</ModalListItem>}
+        </ModalList>
     </Modal>
 }

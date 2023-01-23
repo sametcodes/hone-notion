@@ -4,12 +4,12 @@ import { Input } from '../input';
 
 interface IFlow {
     children?: React.ReactNode;
-    refs: {
+    lines: {
         link: React.RefObject<HTMLDivElement>;
         type: string;
         value: string;
     }[];
-    setRefs: React.Dispatch<React.SetStateAction<{
+    setLines: React.Dispatch<React.SetStateAction<{
         link: React.RefObject<HTMLDivElement>;
         type: string;
         value: string;
@@ -19,27 +19,27 @@ interface IFlow {
     }) => void;
 }
 
-export const Flow = ({ refs, setRefs, handleModal }: IFlow) => {
+export const Flow = ({ lines, setLines, handleModal }: IFlow) => {
     const inputsContainerRef = useRef<HTMLDivElement>(null);
 
     const createNewInput = (id: number) => {
         // Create a new input
-        if (refs.length - 1 === id) {
-            setRefs((refs) => [...refs, { link: createRef<HTMLDivElement>(), type: "div", value: "" }]);
+        if (lines.length - 1 === id) {
+            setLines((lines) => [...lines, { link: createRef<HTMLDivElement>(), type: "div", value: "" }]);
         }
 
-        if (refs.length - 1 > id) {
-            refs[id + 1].link.current?.focus();
+        if (lines.length - 1 > id) {
+            lines[id + 1].link.current?.focus();
         }
     }
 
     const deleteInput = (id: number) => {
-        const ref = refs[id];
+        const ref = lines[id];
 
         // Set the ref input to div type if it was set to other nodes, rather than deleting it
         if (ref.type !== "div") {
-            setRefs(refs.map(ref => {
-                if (ref === refs[id]) {
+            setLines(lines.map(ref => {
+                if (ref === lines[id]) {
                     return { ...ref, type: "div", value: "" }
                 }
                 return ref;
@@ -48,23 +48,23 @@ export const Flow = ({ refs, setRefs, handleModal }: IFlow) => {
         }
 
         // Preventing deleting the last input
-        if (refs.length <= 1) return;
+        if (lines.length <= 1) return;
 
         // Delete the focused input and focus on the previous one
-        setRefs(refs => refs.filter((_, i) => i !== id));
-        refs[id - 1].link.current?.focus();
+        setLines(lines => lines.filter((_, i) => i !== id));
+        lines[id - 1].link.current?.focus();
     }
 
     const onClickInputContainer = (event: React.MouseEvent<HTMLDivElement>, id: number) => {
         // Focusing on the input when clicking on the container
         event.preventDefault();
-        refs[id].link.current?.focus();
+        lines[id].link.current?.focus();
     }
 
     const onClickEditor = (event: React.MouseEvent<HTMLDivElement>) => {
         // Focusing on the last input if user clicks on the area below the inputs
         if (!inputsContainerRef?.current?.contains(event.target as HTMLDivElement)) {
-            refs[refs.length - 1].link.current?.focus();
+            lines[lines.length - 1].link.current?.focus();
         }
     }
 
@@ -89,12 +89,12 @@ export const Flow = ({ refs, setRefs, handleModal }: IFlow) => {
 
     return <div onClick={onClickEditor} style={{ paddingBottom: "500px" }}>
         <div ref={inputsContainerRef}>
-            {refs.map((ref, id) =>
+            {lines.map((line, id) =>
                 <Container key={id} onClick={(event) => onClickInputContainer(event, id)}>
                     <Input
-                        ref={ref.link}
-                        type={ref.type}
-                        value={ref.value}
+                        ref={line.link}
+                        type={line.type}
+                        value={line.value}
                         createNewInput={createNewInput.bind(this, id)}
                         deleteInput={deleteInput.bind(this, id)}
                         sendCommand={sendCommand}

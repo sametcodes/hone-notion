@@ -14,6 +14,7 @@ export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivE
     // TODO: set the cursor to the end when focused
 
     const target = (ref as RefObject<HTMLDivElement>);
+
     useEffect(() => {
         if (!target.current) return;
         target.current?.focus();
@@ -44,7 +45,7 @@ export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivE
         return () => {
             target.current?.removeEventListener("focus", movesTheCursorToEnd, false);
         }
-    }, [])
+    }, [target])
 
 
     const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {

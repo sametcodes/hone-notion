@@ -1,6 +1,7 @@
 import { Editor, Layout } from './components';
+import { IConfig } from './config';
 
-const config = {
+const config: IConfig = {
   nodes: [
     { description: 'paragraph', node: 'p' },
     { description: 'heading', node: 'h1' },

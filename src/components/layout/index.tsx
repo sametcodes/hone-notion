@@ -1,4 +1,4 @@
-import { Navbar, Logo, Container, Menu, MenuItem, Main, Document } from '../styled';
+import { Navbar, Logo, Menu, MenuItem, Main, Document } from '../styled';
 
 interface ILayout {
     children: React.ReactNode;

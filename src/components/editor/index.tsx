@@ -2,21 +2,48 @@ import { useState, createRef, useMemo } from 'react';
 import { FlowModal } from './modal';
 import { Flow } from './flow';
 import { Header } from './header';
+import { BGColors, Colors, TextStylings } from '../../config';
 
 interface IEditor {
     config: {
         nodes: { node: string; description: string }[];
     }
 }
+interface Line {
+    link: React.RefObject<HTMLDivElement>;
+    type: string;
+    value: string;
+    color?: Colors;
+    bgColor?: BGColors;
+    textStyling?: TextStylings; 
+}
+
+const defaultValues = [
+    {
+        link: createRef<HTMLDivElement>(),
+        type: "div",
+        value: "This is a notion-like editor. You can type / and select an element and use it."
+    },
+    {
+        link: createRef<HTMLDivElement>(),
+        type: "h1",
+        value: "This is an header"
+    },
+    {
+        link: createRef<HTMLDivElement>(),
+        type: "div",
+        value: "Lorem ipsum dolor sit amet."
+    },
+]
 
 export const Editor = ({ config }: IEditor) => {
-    const initialRefs = useMemo(() => [
-        { link: createRef<HTMLDivElement>(), type: "div", value: "Your goal is to make a page that looks like exactly like this one, and has ability to create H1 text simply by typing / then 1, then typing text, and hitting enter." },
-        { link: createRef<HTMLDivElement>(), type: "h1", value: "This is my header" },
-        { link: createRef<HTMLDivElement>(), type: "div", value: "Now this is normal text. All I had to do is do / + 1, and then type my text and hit ENTER/RETURN" },
-    ], []);
+    const initialLines = useMemo<Line[]>(() => defaultValues, []);
 
-    const [refs, setRefs] = useState<{ link: React.RefObject<HTMLDivElement>; type: string; value: string; }[]>(initialRefs);
+    const [lines, setLines] = useState<{
+        link: React.RefObject<HTMLDivElement>;
+        type: string;
+        value: string;
+    }[]>(initialLines);
 
     const [modal, setModal] = useState<{
         show: boolean;
@@ -35,18 +62,18 @@ export const Editor = ({ config }: IEditor) => {
     }
 
     const onSelectModalNodeType = (item: { node: string; description: string; }) => {
-        setRefs(refs.map(ref => {
-            if (ref.link === modal.ref) {
-                return { ...ref, type: item.node, value: "" }
+        setLines(lines.map(line => {
+            if (line.link === modal.ref) {
+                return { ...line, type: item.node, value: "" }
             }
-            return ref;
+            return line;
         }));
         setModal({ ...modal, show: false });
     }
 
     return <>
         <Header title={"Frontend Development"} />
-        <Flow refs={refs} setRefs={setRefs} handleModal={handleModal} />
+        <Flow lines={lines} setLines={setLines} handleModal={handleModal} />
         {modal.show && <FlowModal nodes={config.nodes} modal={modal} onSelect={onSelectModalNodeType} />}
     </>
 }
