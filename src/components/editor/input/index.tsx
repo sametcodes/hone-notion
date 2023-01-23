@@ -56,7 +56,7 @@ export const Input = forwardRef((props: IInput, ref: React.ForwardedRef<HTMLDivE
         }
 
         // delete input if backspace is pressed
-        if (event.key === "Backspace" && (event.target as HTMLDivElement).innerHTML === "") {
+        if (event.key === "Backspace" && (event.target as HTMLDivElement).innerText.replace(/\n/, "") === "") {
             event.preventDefault();
             deleteInput();
             return;
